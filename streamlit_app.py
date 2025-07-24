@@ -1,4 +1,10 @@
 import streamlit as st
+
+if "email_sent" not in st.session_state:
+    st.session_state.email_sent = False
+if "email_error" not in st.session_state:
+    st.session_state.email_error = False
+    
 import urllib.parse
 
 import requests
@@ -69,19 +75,28 @@ for i, q in enumerate(questions, 1):
         score += score_map[answer]
 
 # --- Результат ---
-if st.button("Submit"):
-    st.subheader("📊 Your Score:")
-    st.write(f"**{score} out of 40**")
+st.markdown("---")
+st.subheader("📩 Want to keep a copy?")
+st.markdown("Enter your email if you’d like to take this result to your therapist or track your score over time.")
+user_email = st.text_input("Your email")
 
-    if score <= 10:
-        st.success("You’re doing well — no or very few signs of burnout. Keep listening to yourself and taking care of your energy.")
-    elif score <= 20:
-        st.info("You may be experiencing mild burnout. Try to build in small breaks, moments of rest, and ask for help when you need it.")
-    elif score <= 30:
-        st.warning("Your score suggests moderate burnout. This is a good time to slow down, reassess your load, and connect with support if possible.")
+if st.button("📨 Send to my email"):
+    if user_email:
+        success = send_email(user_email, score)
+        if success:
+            st.session_state.email_sent = True
+            st.session_state.email_error = False
+        else:
+            st.session_state.email_error = True
+            st.session_state.email_sent = False
     else:
-        st.error("You’re showing signs of severe burnout. You don’t have to handle this alone — please consider speaking with a mental health professional.")
+        st.warning("Please enter a valid email address.")
 
+# Show result if sent
+if st.session_state.email_sent:
+    st.success(f"✅ Your result was sent to {user_email}!")
+elif st.session_state.email_error:
+    st.error("⚠️ Something went wrong while sending your result. Please try again.")
     # --- Email форма ---
     st.markdown("---")
     st.subheader("📩 Want to keep a copy?")
