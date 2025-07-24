@@ -1,6 +1,30 @@
 import streamlit as st
 import urllib.parse
 
+import requests
+
+def send_email(email, score):
+    service_id = "service_5mdfy5o"
+    template_id = "template_ssn7zho"
+    public_key = "d2wpyHuhfsjppcRiN"
+
+    payload = {
+        "service_id": service_id,
+        "template_id": template_id,
+        "user_id": public_key,
+        "template_params": {
+            "user_email": email,
+            "burnout_score": score
+        }
+    }
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    response = requests.post("https://api.emailjs.com/api/v1.0/email/send", json=payload, headers=headers)
+    return response.status_code == 200
+
 st.set_page_config(page_title="Working Parent Burnout Check", layout="centered")
 
 # --- Заголовок і опис ---
@@ -63,12 +87,15 @@ if st.button("Submit"):
     st.subheader("📩 Want to keep a copy?")
     st.markdown("Enter your email if you’d like to take this result to your therapist or track your score over time.")
     user_email = st.text_input("Your email")
-    if st.button("Send to my email (demo)"):
-        if user_email:
-            st.success(f"✅ Your result would be sent to {user_email} (email sending not enabled in demo).")
+    if st.button("📨 Send to my email"):
+    if user_email:
+        if send_email(user_email, score):
+            st.success(f"✅ Your result was sent to {user_email}!")
         else:
-            st.warning("Please enter a valid email address.")
-
+            st.error("⚠️ Something went wrong while sending your result. Please try again.")
+    else:
+        st.warning("Please enter a valid email address.")
+        
     # --- Кнопки соцмереж ---
     st.markdown("---")
     st.subheader("📣 Other parents might need this too")
