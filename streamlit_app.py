@@ -57,68 +57,59 @@ if st.button("✅ Submit"):
     if score <= 10:
       st.success("You’re doing well — no or very few signs of burnout. Keep listening to yourself and taking care of your energy.")
     elif score <= 20:
-      st.info(
-          "You may be experiencing mild burnout." 
-          "Try to build in small breaks, moments of rest," 
-          "and ask for help if you need it."
-          "💾 You might want to screenshot this result — "
-          "it could be useful to bring to your therapist,"
-          "or just to check in with yourself again in a few weeks."
-      )
+      st.info("""You may be experiencing mild burnout. 
+      
+          Try to build in small breaks, moments of rest, and ask for help if you need it.
+          
+          💾 You might want to screenshot this result — it could be useful to bring to your therapist, or just to check in with yourself again in a few weeks.""")
     elif score <= 30:
-      st.warning(
-          "Your score suggests moderate burnout."
-          "This is a good time to slow down, reassess your load," 
-          "and connect with support if possible."
-          "💾 You might want to screenshot this result — "
-          "it could be useful to bring to your therapist,"
-          "or just to check in with yourself again in a few weeks."
-      )
+      st.warning("""Your score suggests moderate burnout.
+      
+          This is a good time to slow down, reassess your load, and connect with support if possible.
+          
+          💾 You might want to screenshot this result — it could be useful to bring to your therapist, or just to check in with yourself again in a few weeks.""")
     else:
-      st.error(
-          "You’re showing signs of severe burnout."
-          "You don’t have to handle this alone — please consider" 
-          "speaking with a mental health professional."
-          "💾 You might want to screenshot this result — "
-          "it could be useful to bring to your therapist,"
-          "or just to check in with yourself again in a few weeks."
-      )
+      st.error("""You’re showing signs of severe burnout.
+      
+          You don’t have to handle this alone — please consider speaking with a mental health professional.
+          
+          💾 You might want to screenshot this result — it could be useful to bring to your therapist, or just to check in with yourself again in a few weeks.""")
 
 
     # --- Кнопки соцмереж + картинки ---
-st.markdown("---")
-st.subheader("📣 Other parents might need this too")
+    st.markdown("---")
+    st.subheader("📣 Other parents might need this too")
 
-st.markdown(
+    st.markdown(
+        """
+    We don’t track your data, so no auto-post — 
+    but here’s a text you can use and some images to go with it,  
+    if you want to help other parents realise that burnout is real:
     """
-We don’t track your data, so no auto-post — 
-but here’s a text you can use and some images to go with it,  
-if you want to help other parents realise that burnout is real:
-"""
-)
+    )
 
-share_text = f"""Parental burnout is more common than we think.
-I scored {score}/40 in this 2-minute self-check.
-Check in with yourself 👉 https://burnout.streamlit.app/"""
+    share_text = f"""Parental burnout is more common than we think.
+    I scored {score}/40 in this 2-minute self-check.
+    Check in with yourself 👉 https://burnout.streamlit.app/"""
 
-st.code(share_text, language="markdown")
+    st.code(share_text, language="markdown")
 
-st.markdown("Right-click or long-press an image to save and share:")
+    st.markdown("Right-click or long-press an image to save and share:")
 
-# --- Відображення 5 картинок у два ряди ---
-import os
+    # --- Відображення 5 картинок у два ряди ---
+    import os
 
-image_files = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"]
-image_path = "."
+    image_files = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"]
+    image_path = "."
 
-cols = st.columns(3)
-for i in range(3):
-    with cols[i]:
-        st.image(os.path.join(image_path, image_files[i]), use_container_width=True)
+    cols = st.columns(3)
+    for i in range(3):
+        with cols[i]:
+            st.image(os.path.join(image_path, image_files[i]), use_container_width=True)
 
-cols = st.columns(2)
-for i in range(3, 5):
-    with cols[i - 3]:
-        st.image(os.path.join(image_path, image_files[i]), use_container_width=True)
+    cols = st.columns(2)
+    for i in range(3, 5):
+        with cols[i - 3]:
+            st.image(os.path.join(image_path, image_files[i]), use_container_width=True)
 
-    st.caption("Scale copyright © Kate Gawlik and Bernadette Mazurek Melnyk, 2022")
+st.caption("Scale copyright © Kate Gawlik and Bernadette Mazurek Melnyk, 2022")
