@@ -88,12 +88,12 @@ if st.button("Submit"):
     st.markdown("Enter your email if you’d like to take this result to your therapist or track your score over time.")
     user_email = st.text_input("Your email")
     if st.button("📨 Send to my email"):
-    if user_email:
+      if user_email:
         if send_email(user_email, score):
             st.success(f"✅ Your result was sent to {user_email}!")
         else:
             st.error("⚠️ Something went wrong while sending your result. Please try again.")
-    else:
+      else:
         st.warning("Please enter a valid email address.")
         
     # --- Кнопки соцмереж ---
