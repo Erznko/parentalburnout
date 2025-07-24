@@ -4,7 +4,7 @@ import urllib.parse
 st.set_page_config(page_title="Working Parent Burnout Check", layout="centered")
 
 # --- Заголовок і опис ---
-st.title("🧠 Working Parent Burnout Check")
+st.title("Working Parent Burnout Check")
 st.write("Based on the validated Working Parent Burnout Scale by Gawlik & Melnyk (2022).")
 st.markdown("""
 This 10-question scale is here to help you pause and reflect.
