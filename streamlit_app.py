@@ -37,9 +37,10 @@ options = ["Not at all", "A little", "Somewhat", "Moderately so", "Very much so"
 score_map = {"Not at all": 0, "A little": 1, "Somewhat": 2, "Moderately so": 3, "Very much so": 4}
 reverse_map = {"Not at all": 4, "A little": 3, "Somewhat": 2, "Moderately so": 1, "Very much so": 0}
 
-answers = []
-for i, q in enumerate(questions, 1):
-    answers.append(st.radio(f"Q{i}: {q}", options, key=f"q{i}"))
+with st.expander("🔍 Start the burnout self-check (10 quick questions)"):
+    answers = []
+    for i, q in enumerate(questions, 1):
+        answers.append(st.radio(f"Q{i}: {q}", options, key=f"q{i}"))
 
 # --- Submit ---
 if st.button("✅ Submit"):
