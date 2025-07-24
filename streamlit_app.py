@@ -54,12 +54,24 @@ if st.button("✅ Submit"):
     st.subheader("🧾 Your Result")
     st.markdown(f"**Your burnout score is: `{score}` out of 40.**")
 
-    if score >= 30:
-        st.warning("This score suggests a high level of burnout. Please seek support.")
-    elif score >= 20:
-        st.info("You may be experiencing moderate burnout symptoms.")
+    if score <= 10:
+      st.success("You’re doing well — no or very few signs of burnout. Keep listening to yourself and taking care of your energy.")
+    elif score <= 20:
+      st.info("You may be experiencing mild burnout. Try to build in small breaks, moments of rest, and ask for help if you need it.
+      
+              💾 You might want to screenshot this result — it could be useful to bring to your therapist, 
+              or just to check in with yourself again in a few weeks.")
+    elif score <= 30:
+      st.warning("Your score suggests moderate burnout. This is a good time to slow down, reassess your load, and connect with support if possible.
+      
+              💾 You might want to screenshot this result — it could be useful to bring to your therapist, 
+              or just to check in with yourself again in a few weeks.")
     else:
-        st.success("You're doing okay — but always take time for yourself.")
+      st.error("You’re showing signs of severe burnout. You don’t have to handle this alone — please consider speaking with a mental health professional.
+      
+              💾 You might want to screenshot this result — it could be useful to bring to your therapist, 
+              or just to check in with yourself again in a few weeks.")
+
 
     # --- Кнопки соцмереж + картинки ---
 st.markdown("---")
@@ -90,11 +102,11 @@ image_path = "."
 cols = st.columns(3)
 for i in range(3):
     with cols[i]:
-        st.image(os.path.join(image_path, image_files[i]), use_column_width=True)
+        st.image(os.path.join(image_path, image_files[i]), use_container_width=True)
 
 cols = st.columns(2)
 for i in range(3, 5):
     with cols[i - 3]:
-        st.image(os.path.join(image_path, image_files[i]), use_column_width=True)
+        st.image(os.path.join(image_path, image_files[i]), use_container_width=True)
 
     st.caption("Scale copyright © Kate Gawlik and Bernadette Mazurek Melnyk, 2022")
