@@ -1,38 +1,22 @@
 import streamlit as st
 import urllib.parse
-import requests
 
 st.set_page_config(page_title="Working Parent Burnout Check", layout="centered")
-
-# --- Ініціалізація session state ---
-if "email_sent" not in st.session_state:
-    st.session_state.email_sent = False
-if "email_error" not in st.session_state:
-    st.session_state.email_error = False
-if "form_submitted" not in st.session_state:
-    st.session_state.form_submitted = False
-
-# --- EmailJS ---
-def send_email(email, score):
-    payload = {
-        "service_id": "service_5mdfy5o",
-        "template_id": "template_ssn7zho",
-        "user_id": "d2wpyHuhfsjppcRiN",
-        "template_params": {
-            "user_email": email,
-            "burnout_score": score
-        }
-    }
-    headers = {"Content-Type": "application/json"}
-    response = requests.post("https://api.emailjs.com/api/v1.0/email/send", json=payload, headers=headers)
-    return response.status_code == 200
 
 # --- Заголовок і опис ---
 st.title("🧠 Working Parent Burnout Check")
 st.write("Based on the validated Working Parent Burnout Scale by Gawlik & Melnyk (2022).")
 st.markdown("""
 This 10-question scale is here to help you pause and reflect.
-If your score feels confronting, it’s not a verdict, and it’s not your fault — you just need more support and care for yourself.
+It’s a tool designed for working parents — to check in with yourself, 
+spot signs of burnout early, and (if needed) share your result with a professional.
+
+Originally developed for clinical use, it’s been shown to reliably detect parental burnout in working parents.
+
+If your score feels confronting, it’s not a verdict, and it’s not your fault — you just need more support 
+and care for yourself. Please seek professional help if it's hard for you to cope.
+
+This self-check is for informational purposes only and is not a clinical diagnosis.
 """)
 
 # --- Питання ---
@@ -55,48 +39,34 @@ reverse_map = {"Not at all": 4, "A little": 3, "Somewhat": 2, "Moderately so": 1
 
 answers = []
 for i, q in enumerate(questions, 1):
-    answer = st.radio(f"Q{i}: {q}", options, key=f"q{i}")
-    answers.append(answer)
+    answers.append(st.radio(f"Q{i}: {q}", options, key=f"q{i}"))
 
+# --- Submit ---
 if st.button("✅ Submit"):
-    st.session_state.form_submitted = True
-
-if st.session_state.form_submitted:
     score = 0
-    for i, ans in enumerate(answers):
-        if i + 1 in [4, 10]:
-            score += reverse_map[ans]
+    for i, answer in enumerate(answers):
+        if i in [3, 9]:  # 4th and 10th questions
+            score += reverse_map[answer]
         else:
-            score += score_map[ans]
+            score += score_map[answer]
 
     st.markdown("---")
-    st.subheader("📟 Your result")
-    st.write(f"Your score: **{score}/40**")
-    st.caption("This is not a diagnosis — but it’s a useful tool for reflection.")
+    st.subheader("🧾 Your Result")
+    st.markdown(f"**Your burnout score is: `{score}` out of 40.**")
 
-    # --- Email форма ---
-    st.markdown("---")
-    st.subheader("📩 Want to keep a copy?")
-    user_email = st.text_input("Your email")
-    if st.button("📨 Send to my email"):
-        if user_email:
-            success = send_email(user_email, score)
-            st.session_state.email_sent = success
-            st.session_state.email_error = not success
-        else:
-            st.warning("Please enter a valid email address.")
-
-    if st.session_state.email_sent:
-        st.success(f"✅ Your result was sent to {user_email}!")
-    elif st.session_state.email_error:
-        st.error("⚠️ Something went wrong while sending your result. Please try again later.")
+    if score >= 30:
+        st.warning("This score suggests a high level of burnout. Please seek support.")
+    elif score >= 20:
+        st.info("You may be experiencing moderate burnout symptoms.")
+    else:
+        st.success("You're doing okay — but always take time for yourself.")
 
     # --- Кнопки соцмереж ---
     st.markdown("---")
     st.subheader("📣 Other parents might need this too")
     st.markdown("Sharing your experience can help others notice what they’re feeling too — and remind them they’re not alone.")
 
-    share_text = f"Parental burnout is more common than we think. I scored {score}/40 in this 2-minute test. Check in with yourself 👈"
+    share_text = f"Parental burnout is more common than we think. I scored {score}/40 in this 2-minute test. Check in with yourself 👉"
     app_url = "https://burnout.streamlit.app/"
     tweet = f"{share_text} {app_url}"
     tweet_url = "https://twitter.com/intent/tweet?text=" + urllib.parse.quote(tweet)
@@ -107,7 +77,7 @@ if st.session_state.form_submitted:
     with col1:
         st.markdown(f"[🔗 Share on LinkedIn]({linkedin_url})")
     with col2:
-        st.markdown(f"[🦆 Share on Twitter/X]({tweet_url})")
+        st.markdown(f"[🐦 Share on Twitter/X]({tweet_url})")
     with col3:
         st.markdown(f"[📘 Share on Facebook]({fb_url})")
 
