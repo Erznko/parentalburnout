@@ -7,8 +7,15 @@ st.set_page_config(page_title="Working Parent Burnout Check", layout="centered")
 st.title("🧠 Working Parent Burnout Check")
 st.write("Based on the validated Working Parent Burnout Scale by Gawlik & Melnyk (2022).")
 st.markdown("""
+This 10-question scale is here to help you pause and reflect.
+It’s a tool designed for working parents — to check in with yourself, 
+spot signs of burnout early, and (if needed) share your result with a professional.
+Originally developed for clinical use, it’s been shown to reliably detect parental burnout in working parents.
+
+If your score feels confronting, it’s not a verdict, and it’s not your fault — you just need more support 
+and care for yourself. Please seek professional help if it's hard for you to cope.
+
 This self-check is for informational purposes only and is not a clinical diagnosis.  
-If your score concerns you, consider speaking with a healthcare professional.
 """)
 
 # --- Питання ---
@@ -43,18 +50,18 @@ if st.button("Submit"):
     st.write(f"**{score} out of 40**")
 
     if score <= 10:
-        st.success("No or few signs of burnout. Keep taking care of yourself!")
+        st.success("You’re doing well — no or very few signs of burnout. Keep listening to yourself and taking care of your energy.")
     elif score <= 20:
-        st.info("Mild burnout – time to build in some self-care and stress relief.")
+        st.info("You may be experiencing mild burnout. Try to build in small breaks, moments of rest, and ask for help when you need it.")
     elif score <= 30:
-        st.warning("Moderate burnout – consider changes and seek support if needed.")
+        st.warning("Your score suggests moderate burnout. This is a good time to slow down, reassess your load, and connect with support if possible.")
     else:
-        st.error("Severe burnout – please consider speaking to a mental health professional. You deserve support.")
+        st.error("You’re showing signs of severe burnout. You don’t have to handle this alone — please consider speaking with a mental health professional.")
 
     # --- Email форма ---
     st.markdown("---")
-    st.subheader("📩 Want to keep this result?")
-    st.markdown("Enter your email address to send this result to yourself (e.g., to share with a therapist).")
+    st.subheader("📩 Want to keep a copy?")
+    st.markdown("Enter your email if you’d like to take this result to your therapist or track your score over time.")
     user_email = st.text_input("Your email")
     if st.button("Send to my email (demo)"):
         if user_email:
@@ -64,11 +71,11 @@ if st.button("Submit"):
 
     # --- Кнопки соцмереж ---
     st.markdown("---")
-    st.subheader("📣 Help raise awareness")
-    st.markdown("Share your experience (anonymously or not) to help others understand what working parents go through.")
+    st.subheader("📣 Other parents might need this too")
+    st.markdown("Sharing your experience can help others notice what they’re feeling too — and remind them they’re not alone.")
 
-    share_text = f"I just took the Working Parent Burnout self-check and scored {score}/40. It really made me reflect. Try it here:"
-    app_url = "https://your-app-link.com"  # 🔁 Заміни на свій Streamlit URL
+    share_text = f"Parental burnout is more common than we think. I scored {score}/40 in this 2-minute test. Check in with yourself 👉 [link]"
+    app_url = "https://burnout.streamlit.app/"  
     tweet = f"{share_text} {app_url}"
     tweet_url = "https://twitter.com/intent/tweet?text=" + urllib.parse.quote(tweet)
     linkedin_url = "https://www.linkedin.com/sharing/share-offsite/?url=" + urllib.parse.quote(app_url)
