@@ -112,4 +112,6 @@ if st.button("✅ Submit"):
         with cols[i - 3]:
             st.image(os.path.join(image_path, image_files[i]), use_container_width=True)
 
+    st.markdown("The test results are for self-reflection and information purposes only. \nIf your symptoms are affecting your wellbeing, please speak to a mental health professional or your GP.")
+
 st.caption("Scale copyright © Kate Gawlik and Bernadette Mazurek Melnyk, 2022")
