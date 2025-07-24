@@ -57,23 +57,23 @@ if st.button("✅ Submit"):
     if score <= 10:
       st.success("You’re doing well — no or very few signs of burnout. Keep listening to yourself and taking care of your energy.")
     elif score <= 20:
-      st.info("""You may be experiencing mild burnout. 
-      
-          Try to build in small breaks, moments of rest, and ask for help if you need it.
-          
-          💾 You might want to screenshot this result — it could be useful to bring to your therapist, or just to check in with yourself again in a few weeks.""")
+      st.info(
+          "You may be experiencing mild burnout. \n\n"
+          "Try to build in small breaks, moments of rest, and ask for help if you need it.  \n\n"
+          "💾 You might want to screenshot this result — it could be useful to bring to your therapist, or just to check in with yourself again in a few weeks."
+      )
     elif score <= 30:
-      st.warning("""Your score suggests moderate burnout.
-      
-          This is a good time to slow down, reassess your load, and connect with support if possible.
-          
-          💾 You might want to screenshot this result — it could be useful to bring to your therapist, or just to check in with yourself again in a few weeks.""")
+      st.warning(
+          "Your score suggests moderate burnout.   \n\n"
+          "This is a good time to slow down, reassess your load, and connect with support if possible.   \n\n"
+          "💾 You might want to screenshot this result — it could be useful to bring to your therapist, or just to check in with yourself again in a few weeks."
+      )
     else:
-      st.error("""You’re showing signs of severe burnout.
-      
-          You don’t have to handle this alone — please consider speaking with a mental health professional.
-          
-          💾 You might want to screenshot this result — it could be useful to bring to your therapist, or just to check in with yourself again in a few weeks.""")
+      st.error(
+          "You’re showing signs of severe burnout.   \n\n"
+          "You don’t have to handle this alone — please consider speaking with a mental health professional.  \n\n"
+          "💾 You might want to screenshot this result — it could be useful to bring to your therapist, or just to check in with yourself again in a few weeks."
+      )
 
 
     # --- Кнопки соцмереж + картинки ---
