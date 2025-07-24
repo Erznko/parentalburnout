@@ -61,24 +61,40 @@ if st.button("✅ Submit"):
     else:
         st.success("You're doing okay — but always take time for yourself.")
 
-    # --- Кнопки соцмереж ---
-    st.markdown("---")
-    st.subheader("📣 Other parents might need this too")
-    st.markdown("Sharing your experience can help others notice what they’re feeling too — and remind them they’re not alone.")
+    # --- Кнопки соцмереж + картинки ---
+st.markdown("---")
+st.subheader("📣 Other parents might need this too")
 
-    share_text = f"Parental burnout is more common than we think. I scored {score}/40 in this 2-minute test. Check in with yourself 👉"
-    app_url = "https://burnout.streamlit.app/"
-    tweet = f"{share_text} {app_url}"
-    tweet_url = "https://twitter.com/intent/tweet?text=" + urllib.parse.quote(tweet)
-    linkedin_url = "https://www.linkedin.com/sharing/share-offsite/?url=" + urllib.parse.quote(app_url)
-    fb_url = "https://www.facebook.com/sharer/sharer.php?u=" + urllib.parse.quote(app_url)
+st.markdown(
+    """
+We don’t track your data, so no auto-post — 
+but here’s a text you can use and some images to go with it,  
+if you want to help other parents realise that burnout is real:
+"""
+)
 
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown(f"[🔗 Share on LinkedIn]({linkedin_url})")
-    with col2:
-        st.markdown(f"[🐦 Share on Twitter/X]({tweet_url})")
-    with col3:
-        st.markdown(f"[📘 Share on Facebook]({fb_url})")
+share_text = f"""Parental burnout is more common than we think.
+I scored {score}/40 in this 2-minute self-check.
+Check in with yourself 👉 https://burnout.streamlit.app/"""
+
+st.code(share_text, language="markdown")
+
+st.markdown("Right-click or long-press an image to save and share:")
+
+# --- Відображення 5 картинок у два ряди ---
+import os
+
+image_files = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"]
+image_path = "."
+
+cols = st.columns(3)
+for i in range(3):
+    with cols[i]:
+        st.image(os.path.join(image_path, image_files[i]), use_column_width=True)
+
+cols = st.columns(2)
+for i in range(3, 5):
+    with cols[i - 3]:
+        st.image(os.path.join(image_path, image_files[i]), use_column_width=True)
 
     st.caption("Scale copyright © Kate Gawlik and Bernadette Mazurek Melnyk, 2022")
